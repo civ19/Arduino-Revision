@@ -1,19 +1,28 @@
-const int btn = 2;
-volatile bool flip = false;
+volatile int encoderPos = 0;
+int lastPos = -1;
+
+const int clk = 2;
+const int dt = 3;
 
 void setup() {
-  pinMode(btn, INPUT_PULLUP);
+  pinMode(clk, INPUT_PULLUP);
+  pinMode(dt, INPUT_PULLUP);
+
   Serial.begin(9600);
-  attachInterrupt(digitalPinToInterrupt(btn), motionISR, FALLING); //1 to 0
+  attachInterrupt(digitalPinToInterrupt(clk), rotaryISR, FALLING); //if something drops then itll signify cw and ccw
+
 }
 
-void loop() {
-  if(flip == true) {
-    Serial.println("Door Opened.");
+void loop() { //the actual stuff we wanna print
+  if(encoderPos != lastPos) {
+    Serial.print("Position val: "); Serial.println(encoderPos);
+
+    lastPos = encoderPos; //upodatng it
   }
-  flip = false;
 }
+void rotaryISR() { //bg logic
+  int dtState = digitalRead(dt);
 
-void motionISR() {
-  flip = true;
+  if(dtState == HIGH && encoderPos < 100) {encoderPos++;} //cw
+  else if(dtState == LOW && encoderPos > 0) {encoderPos--;} //ccw. dtState drops first
 }
