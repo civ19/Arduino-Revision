@@ -22,7 +22,7 @@ String getHTML() {
   html += "<p><a href='/toggle' class='btn'>TOGGLE ONBOARD LED</a></p>";
   html += "</body></html>";
   return html;
-
+}
 //route controllers/controllers
 
 void handleRoot() {
@@ -55,7 +55,15 @@ void setup() {
 
     //url routing config
     server.on("/", handleRoot); //if base URL requested, run handleroot
-    server.on("/toggle", handleTogggle); //if /toggle path then run handleToggle. kinda like getmapping
+    server.on("/toggle", handleToggle); //if /toggle path then run handleToggle. kinda like getmapping
+    
+    //fire up internal web server engine
+    server.begin();
+    Serial.println("HTTP Web Server Started!");
+
 }
 
-
+void loop() {
+    //async network listener
+    server.handleClient();
+}
