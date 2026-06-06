@@ -52,7 +52,10 @@ void setup() {
 
     Serial.println("\nConnected Successfully!");
     Serial.print("Your local URL is: http://"); Serial.println(WiFi.localIP());
-    
+
+    //url routing config
+    server.on("/", handleRoot); //if base URL requested, run handleroot
+    server.on("/toggle", handleTogggle); //if /toggle path then run handleToggle. kinda like getmapping
 }
 
 
