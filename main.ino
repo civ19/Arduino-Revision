@@ -36,6 +36,23 @@ void handleToggle() {
 }
 
 //firmware setup
+void setup() {
+    Serial.begin(115200);
+    pinMode(LED_BUILTIN, OUTPUT);
 
+//pointer to home wifi
+    Serial.print("connecting to WiFi");
+    WiFi.begin(ssid, password);
+
+    //blocking loop: wait till router assigns IP
+    while(WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println("\nConnected Successfully!");
+    Serial.print("Your local URL is: http://"); Serial.println(WiFi.localIP());
+    
+}
 
 
