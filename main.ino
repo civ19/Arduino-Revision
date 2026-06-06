@@ -22,4 +22,20 @@ String getHTML() {
   html += "<p><a href='/toggle' class='btn'>TOGGLE ONBOARD LED</a></p>";
   html += "</body></html>";
   return html;
+
+//route controllers/controllers
+
+void handleRoot() {
+    server.send(200, "text/html", getHTML()); //status 200
 }
+
+void handleToggle() {
+    //reads e_state of led, inverts it, then writes the new !state back to the pin
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    server.send(200, "text/html", getHTML());
+}
+
+//firmware setup
+
+
+
