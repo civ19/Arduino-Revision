@@ -1,8 +1,8 @@
 #include <WiFi.h> //wifi lib
 #include <WebServer.h> //http req
 
-const char* ssid = "iPhone";
-const char* password = "quixoteee";
+const char* ssid = "pass";
+const char* password = "asdasad";
 
 WebServer server(80); //http server on port 80
 
@@ -25,7 +25,7 @@ String getHTML() {
 }
 //route controllers/controllers
 
-int ledPin = 48;
+int ledPin = 2;
 
 void handleRoot() {
     server.send(200, "text/html", getHTML()); //status 200
@@ -33,6 +33,7 @@ void handleRoot() {
 
 void handleToggle() {
     //reads e_state of led, inverts it, then writes the new !state back to the pin
+    Serial.println("TOGGLE HIT");
     digitalWrite(ledPin, !digitalRead(ledPin));
     server.send(200, "text/html", getHTML());
 }
