@@ -1,8 +1,8 @@
 #include <WiFi.h> //wifi lib
 #include <WebServer.h> //http req
 
-const char* ssid = "1051Top";
-const char* password = "Secord1051A";
+const char* ssid = "pass";
+const char* password = "asdasad";
 
 WebServer server(80); //http server on port 80
 
@@ -25,20 +25,23 @@ String getHTML() {
 }
 //route controllers/controllers
 
+int ledPin = 2;
+
 void handleRoot() {
     server.send(200, "text/html", getHTML()); //status 200
 }
 
 void handleToggle() {
     //reads e_state of led, inverts it, then writes the new !state back to the pin
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    Serial.println("TOGGLE HIT");
+    digitalWrite(ledPin, !digitalRead(ledPin));
     server.send(200, "text/html", getHTML());
 }
 
 //firmware setup
 void setup() {
     Serial.begin(115200);
-    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(ledPin, OUTPUT);
 
 //pointer to home wifi
     Serial.print("connecting to WiFi");
